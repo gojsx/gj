@@ -29,3 +29,22 @@ Investigate transforming `String() string` into JS toString method. See section 
 ## Pointers
 
 
+## Integers
+
+### int64 and uint64
+
+JS has only one number type: IEEE-754 double precision floating point. JS can precisely represent integers plus/minus `2^53-1`
+
+Therefore, (u)int8/16/32 can be represented natively. If we can analyze 64-bit cases and prove that they fall within the 2^53 range, those can use native JS doubles as well.
+
+64-bit integer values outside that range would need to be emulated, for example using "lo" and "hi" variable pairs.
+
+### Flooring division
+
+`x / y | 0` forces flooring division. There may be some better technique.
+
+### Wraparound
+
+asm.js has some techniques for managing integer wraparound behavior (bit ops force integer math). GopherJS has employed these (or similar techniques).
+
+Math.imul is defined as having "C-like 32-bit integer multiplication semantics" and testing in Chrome shows that it wraps around. It specifically seems to use signed integer semantics.
