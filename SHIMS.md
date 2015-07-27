@@ -45,3 +45,5 @@ Becomes:
 ## math
 
 Many math package functions are semantically shared between Go's math package and the JS stdlib. Use of Go's math functions will generate direct uses of JS's Math functions, where appropriate.
+
+math.Nextafter and math.Nextafter32 can be implemented using an ArrayBuffer.
