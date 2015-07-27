@@ -50,10 +50,15 @@ asm.js has some techniques for managing integer wraparound behavior (bit ops for
 Math.imul is defined as having "C-like 32-bit integer multiplication semantics" and testing in Chrome shows that it wraps around. It specifically seems to use signed integer semantics.
 
 
-## time
+## Time
 
 Go Time values have nanosecond precision with a range of ~292 million millenia, relative to year 1, UTC. JS Date objects have millisecond precision with a range of plus/minus 100,000,000 days (~273 millenia) relative to 1970, UTC.
 
 Time, as representable by JS is therefore about 1 million times less precise, and over a range 1 million times smaller than time representable by Go.
 
 Tasks that involve sleeps or delays could use JavaScript's Date type, and durations converted to milliseconds. Use of time that goes outside the range JS Date range (or that meaningfully needs better than millisecond-precision) may need special code generation.
+
+
+## Slices
+
+For several common input slice types, JS typed arrays could be used. For example. a []byte in Go may generate code for a Uint8Array in JS.
